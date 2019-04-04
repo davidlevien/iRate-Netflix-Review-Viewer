@@ -1,11 +1,17 @@
 {
-  "name": "Getting Started Example",
+  "name": "Netflix: Exposed",
   "version": "1.0",
-  "description": "Build an Extension!",
+  "description": "Searches for current ratings of chosen movie/tv show.",
   "options_page": "options.html",
   "permissions": ["activeTab","declarativeContent","storage"],
+  "content_scripts": [
+    {
+      "matches": ["https://www.netflix.com/browse/*"],
+      "js": ["jquery-3.1.1.min.js","./api.js"]
+    }
+  ],
   "background": {
-    "scripts": ["background.js"],
+    "scripts": ["jquery-3.1.1.min.js","api.js","background.js"],
     "persistent": false
   },
   "page_action": {

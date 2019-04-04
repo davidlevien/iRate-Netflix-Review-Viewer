@@ -1,6 +1,6 @@
-// Copyright 2018 The Chromium Authors. All rights reserved.
-// Use of this source code is governed by a BSD-style license that can be
-// found in the LICENSE file.
+
+// Either delete file, or alter functionality to allow users to change properties of popup windows
+  // auto on/off, window size, font size, etc.
 
 'use strict';
 
