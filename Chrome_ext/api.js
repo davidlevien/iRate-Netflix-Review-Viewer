@@ -27,32 +27,38 @@ $(document).ready(()=>{
 
     function lookupShow(show) {
         lookup = show.split(" ").join("+");
-        console.log('rendering popup');
+        // console.log(lookup);
+        // console.log(yPos);
+        // console.log(xPos);
+        //console.log('rendering popup');
         //create new DOM element <div></div>
-        let popupWindow = document.createElement('div')
-        popupWindow.setAttribute('top','250');
-        popupWindow.setAttribute('left','250');
-        popupWindow.setAttribute('position','fixed');
-        popupWindow.setAttribute('background-color','white');
-        popupWindow.setAttribute('border-style','solid');
-        popupWindow.setAttribute('width','200px');
-        popupWindow.setAttribute('height','200px');
-        popupWindow.setAttribute('z-index','50');
-        document.body.appendChild(popupWindow);
-        //set new DOM element to mouse coordinates
-
-        // $.get(`https://www.omdbapi.com/?t=${lookup}&apikey=da898670`,(data)=>{
-        //     console.log(data.Plot);
-        //     //loop over ratings and get the source and val on each object element in the array
-        //     //console.log(data.Ratings);
-        //     data.Ratings.forEach(obj => {
-        //         console.log(`${obj.Source}: ${obj.Value}`)
-        //     })
-        // });
+        let appWindow = document.getElementById('appMountPoint');
+        let popupWindow = document.createElement('div');
+        popupWindow.setAttribute('id','popupWindow');
+        appWindow.appendChild(popupWindow);
+        let window = document.querySelector('#popupWindow')
+        window.setAttribute('style', `padding: 10px 10px; box-shadow: 10px 10px 40px 3px white; border-radius: 10px; background-color: #22abbd; font-family: Lucida Console, Monaco, monospace; font-size: 1.5vw; border-style: solid; border-color: black; width: 250px; height: auto; position: fixed; top: ${yPos}px; left:${xPos}px`);
+        
+        $.get(`https://www.omdbapi.com/?t=${lookup}&apikey=da898670`,(data)=>{
+            //console.log(data);
+            //loop over ratings and get the source and val on each object element in the array
+            //console.log(data.Ratings);
+            if (!data.Error) {
+                window.innerHTML = '';
+                window.innerHTML += data.Plot.italics() + "<br>";
+                data.Ratings.forEach(obj => {
+                    window.innerHTML += "<br>" + `${obj.Source}: ${obj.Value.bold()}` + "<br>"
+                    //console.log(`${obj.Source}: ${obj.Value}`)
+                })
+                window.innerHTML += `<br><div font-size = '12px'>Awards: ${data.Awards}</div>`
+            } else {
+                window.innerHTML = 'No data for selection';
+            }
+        });
     }
 
     setInterval(()=>{
-        console.log(xPos,',',yPos);
+        //console.log(xPos,',',yPos);
         if(currentDiv != null && currentDiv.className === 'bob-play-hitzone'){
             tvShow = currentDiv.parentElement.parentElement.parentElement.parentElement.parentElement.childNodes[0].childNodes[0]['innerText'];
             //console.log("child:",currentDiv,"grandparent:",newDiv);
@@ -64,6 +70,6 @@ $(document).ready(()=>{
             lookupShow(tvShow);
         };
     }
-    },5000);
+    },500);
     
 })
