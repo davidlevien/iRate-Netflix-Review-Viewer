@@ -1,5 +1,4 @@
 #info-container {
-  max-width: 30rem;
   display: flex;
   border-radius: 10px;
   font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
@@ -17,6 +16,12 @@
 .media-info {
   /* good 'ole index bashing */
   flex-direction: column;
+  max-width: 20rem;
+}
+
+.poster {
+  margin-top: 1rem;
+  margin-left: 3rem;
 }
 
 .poster > img {
