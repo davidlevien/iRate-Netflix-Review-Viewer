@@ -1,0 +1,33 @@
+#info-container {
+  max-width: 30rem;
+  display: flex;
+  border-radius: 10px;
+  font-family: Netflix Sans,Helvetica Neue,Segoe UI,Roboto,Ubuntu,sans-serif;
+  color: #fff;
+  border: 2px solid #B00710;
+  z-index: 999999; 
+  position: fixed;
+  top: 72px;
+  left: 34px;
+  padding: 1.5rem;
+  background: #141414;
+  box-shadow: 1px 1px 14px 4px rgba(255,255,255,0.81);
+
+}
+.media-info {
+  /* good 'ole index bashing */
+  flex-direction: column;
+}
+
+.poster > img {
+  max-width: 12rem;
+}
+
+.fade-in {
+  opacity: 0;
+  transition: opacity 1s;
+}
+
+.fade-in.show {
+  opacity: 1;
+}
