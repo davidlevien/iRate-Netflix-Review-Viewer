@@ -4,8 +4,8 @@ Originally written for a Codesmith hackaton, the extension has been rewritten wi
 
 - Removed jquery
 - Refactored search functionality
-- added local storage caching
-- redesigned window
+- added localstorage caching
+- redesigned UI
 
 # Setup
 
