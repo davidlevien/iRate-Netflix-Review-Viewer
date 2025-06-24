@@ -9,6 +9,9 @@ export default defineConfig({
       // Use inlineDynamicImports to force a single chunk
       output: {
         inlineDynamicImports: true,
+        entryFileNames: "[name].js",
+        chunkFileNames: "chunks/[name].js",
+        assetFileNames: "assets/[name][extname]",
       },
     },
     outDir: "dist",

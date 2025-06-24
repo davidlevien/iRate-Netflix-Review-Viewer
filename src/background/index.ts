@@ -1,13 +1,22 @@
-let xPos;
-let yPos;
-let currTimeout;
+import { MediaData } from "../types/MediaData";
+import { DEBOUNCE_MS } from "./util/constants";
+import { createFloatingInfoContainer } from "./util/createFloatingInfoContainer";
+import { getChromeStorage } from "./util/getChromeStoratge";
+import { prepareLink } from "./util/prepareLink";
+import { setChromeStorage } from "./util/setChromeStorage";
+
+let xPos: number;
+let yPos: number;
+let currTimeout: number;
 
 document.onmousemove = (e) => {
   xPos = e.clientX;
   yPos = e.clientY;
 };
+
 document.addEventListener("mouseover", (event) => {
-  if (event.target.className.includes("boxart")) {
+  const isValidTarget = event.target instanceof HTMLElement;
+  if (isValidTarget && event.target.className.includes("boxart")) {
     // debounce previous timeout
     clearTimeout(currTimeout);
     let offset = event.target.getBoundingClientRect();
@@ -18,11 +27,11 @@ document.addEventListener("mouseover", (event) => {
     currTimeout = setTimeout(async () => {
       const isValidX = xPos >= offset.x - 100 && xPos <= maxX;
       const isValidY = yPos <= offset.y + 400 && yPos >= minY;
-      if (isValidX && isValidY) {
-        const title =
-          event.target.parentNode.querySelectorAll(".fallback-text")[0]
-            .innerText;
-        const cachedData = await getChromeStorage(title);
+      if (isValidX && isValidY && isValidTarget) {
+        const fallback = event.target.parentNode?.querySelectorAll(".fallback-text")[0];
+        const isValidFallback = fallback instanceof HTMLElement;
+        const title = isValidFallback ? fallback.innerText : "";
+        const cachedData = (await getChromeStorage(title)) as MediaData | null;
         if (cachedData === null) {
           try {
             const data = await fetch(prepareLink(title));
@@ -39,6 +48,7 @@ document.addEventListener("mouseover", (event) => {
           createFloatingInfoContainer(cachedData);
         }
       }
-    }, [env.DEBOUNCE_MS]); // after DEBOUNCE_MS, we check if the mouse is still in the range of the boxart component to reduce the need of constant API calls
+      // after DEBOUNCE_MS, we check if the mouse is still in the range of the box-art component to reduce the need of constant API calls
+    }, DEBOUNCE_MS);
   }
 });

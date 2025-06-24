@@ -1,55 +1,12 @@
-/**
- * @typedef Rating
- * @type {Object}
- * @property {string} Source
- * @property {string} Value
- */
-
-/**
- * @typedef MediaData
- * @type {Object}
- * @property {string} Title
- * @property {string} Year
- * @property {string} Rated
- * @property {string} Director
- * @property {string} Writer
- * @property {string} Actors
- * @property {string} Awards
- * @property {string} Poster - URL
- * @property {string} Plot
- * @property {Array<Rating>} Ratings
- */
-
-const { env } = chrome.runtime.getManifest();
-
-const getApiLink = (title) =>
-  `https://www.omdbapi.com/?t=${encodeURIComponent(title)}&apikey=${
-    env.OMDBAPI_KEY
-  }`;
-
-const getChromeStorage = async (key) => {
-  return new Promise((resolve) => {
-    chrome.storage.local.get(key, (data) => {
-      return resolve(Object.keys(data).length === 0 ? null : data[key]);
-    });
-  });
-};
-
-const setChromeStorage = async (key, val, cb) => {
-  return new Promise((resolve) => {
-    chrome.storage.local.set({ [key]: val }, () => {
-      resolve(cb());
-    });
-  });
-};
-
-const prepareLink = (title) => getApiLink(title.replace(SCRUB_REG_EXP, ""));
+import { MediaData } from "../../types/MediaData";
+import { Rating } from "../../types/Rating";
+import { CONTAINER_CLASS, FADE_IN_CLASS, FADE_IN_SHOW_CLASS } from "./constants";
 
 /**
  *
  * @param {MediaData} data
  */
-const createFloatingInfoContainer = (data) => {
+export function createFloatingInfoContainer(data: MediaData) {
   // remove stale container
   const oldMediaInfo = document.getElementById(CONTAINER_CLASS);
   if (oldMediaInfo != null) {
@@ -68,7 +25,7 @@ const createFloatingInfoContainer = (data) => {
         <b>Ratings: </b>
         <ul>
           ${data.Ratings.reduce(
-            (str, curr) =>
+            (str: string, curr: Rating) =>
               str +
               `
                 <li><b>${curr.Source}: </b> ${curr.Value}</li>
@@ -90,4 +47,4 @@ const createFloatingInfoContainer = (data) => {
   setTimeout(() => {
     container.classList.add(FADE_IN_SHOW_CLASS);
   }, 500);
-};
+}
