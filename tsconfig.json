@@ -1,0 +1,9 @@
+{
+  "compilerOptions": {
+    "types": ["chrome", "vite/client"],
+    "target": "ESNext",
+    "module": "ESNext",
+    "moduleResolution": "Node",
+    "strict": true
+  }
+}
