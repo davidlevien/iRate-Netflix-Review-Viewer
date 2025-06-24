@@ -25,11 +25,7 @@ export function createFloatingInfoContainer(data: MediaData) {
         <b>Ratings: </b>
         <ul>
           ${data.Ratings.reduce(
-            (str: string, curr: Rating) =>
-              str +
-              `
-                <li><b>${curr.Source}: </b> ${curr.Value}</li>
-              `,
+            (str: string, curr: Rating) => str + `<li><b>${curr.Source}: </b> ${curr.Value}</li>`,
             ""
           )}
           </ul>
