@@ -4,8 +4,13 @@
   "description": "Queries OMDB API to give proper ratings for content on Netflix",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "build": "vite build",
+    "start": "vite build"
   },
   "author": "Jaime G. & David L.",
-  "license": "ISC"
+  "license": "ISC",
+  "devDependencies": {
+    "chrome-types": "^0.1.354",
+    "vite": "^6.3.5"
+  }
 }
